@@ -3,7 +3,6 @@ package com.fog.corp.veiw;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.fog.corp.GameStart;
 import com.fog.corp.controller.PlayerController;
 import com.fog.corp.model.GameWorld;
 
@@ -14,15 +13,13 @@ public class GameScreen extends AbstractScreen
 {
     private GameWorld world;
     private PlayerController controller; // Контроллер персонажа
-    private OrthographicCamera camera;
 
-    public GameScreen(final GameStart app)
+    public GameScreen()
     {
-        super(app);
-
         world = new GameWorld("MainScene");
         controller = new PlayerController(world); // Инициализируем контроллер
-        camera = (OrthographicCamera)world.getViewport().getCamera();
+        setCamera((OrthographicCamera)world.getViewport().getCamera());
+        getCamera().position.set(315, (world.getPlayer().getCenterY() + 150),0); //TODO: Костыль
     }
 
     @Override
@@ -40,7 +37,7 @@ public class GameScreen extends AbstractScreen
 
         world.getSceneLoader().getEngine().update(delta);
 
-        camera.position.x = world.getPlayer().getCenterX();
+        setCameraPosition(world.getPlayer().getCenterX(), (world.getPlayer().getCenterY() + 150));
         controller.update(delta);
     }
 

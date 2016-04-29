@@ -9,7 +9,5 @@ public class Constants
     public static final String GAME_TITLE = "Sad Day " + GAME_VERSION;
     public static final int GAME_W = 800;
     public static final int GAME_H = 600;
-
-    public static final String MAIN_TEXTURE_ATLAS = "orig/pack.atlas";
-    public static final String PARTICAL_RAIN = "particles/rain";
+    public static final String LOG = "SADDAY";
 }
