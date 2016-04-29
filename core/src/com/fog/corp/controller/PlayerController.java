@@ -88,20 +88,17 @@ public class PlayerController
 
     private void processInput(float delta)
     {
-        float diff = 0;
         if(keys.get(Keys.LEFT))
         {
-            diff = -Player.SPEED*delta;
+            world.getPlayer().transformComponent.x -= Player.SPEED*delta;
             world.getPlayer().changeScale(-1f);
         }
 
         if(keys.get(Keys.RIGHT))
         {
-            diff = +Player.SPEED*delta;
+            world.getPlayer().transformComponent.x += Player.SPEED*delta;
             world.getPlayer().changeScale(1f);
         }
-
-        world.getPlayer().transformComponent.x += diff;
 
         /*world.getPlayer().resetVelocity();
 
