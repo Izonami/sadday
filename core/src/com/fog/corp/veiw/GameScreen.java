@@ -37,7 +37,7 @@ public class GameScreen extends AbstractScreen
 
         world.getSceneLoader().getEngine().update(delta);
 
-        setCameraPosition(world.getPlayer().getCenterX(), (world.getPlayer().getCenterY() + 150));
+        setCameraPosition(world.getPlayer().getCenterX(), (world.getPlayer().getCenterY()+150));
         controller.update(delta);
     }
 
@@ -51,6 +51,8 @@ public class GameScreen extends AbstractScreen
                 break;
             case Input.Keys.LEFT : controller.leftPressed();
                 break;
+            case Input.Keys.UP : controller.upPressed();
+                break;
         }
         return true;
     }
@@ -63,6 +65,8 @@ public class GameScreen extends AbstractScreen
             case Input.Keys.RIGHT : controller.rightReleased();
                 break;
             case Input.Keys.LEFT : controller.leftReleased();
+                break;
+            case Input.Keys.UP : controller.upReleased();
                 break;
         }
 
