@@ -117,7 +117,7 @@ public abstract class AbstractScreen implements Screen, InputProcessor
         {
             return;
         }
-        
+
         getCamera().position.set(x, y, 0);
     }
 
