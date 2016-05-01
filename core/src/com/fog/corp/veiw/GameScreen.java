@@ -41,6 +41,14 @@ public class GameScreen extends AbstractScreen
         controller.update(delta);
     }
 
+    @Override
+    public void resize(int width, int height)
+    {
+        super.resize(width,height);
+
+        world.getSceneLoader().rayHandler.useCustomViewport(0,0, width, height);
+    }
+
     // Слушатель нажатия
     @Override
     public boolean keyDown(int keycode)

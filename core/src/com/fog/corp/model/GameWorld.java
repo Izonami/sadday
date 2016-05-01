@@ -1,6 +1,6 @@
 package com.fog.corp.model;
 
-import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.uwsoft.editor.renderer.SceneLoader;
 import com.uwsoft.editor.renderer.utils.ItemWrapper;
@@ -17,7 +17,7 @@ public class GameWorld
 
     public GameWorld(String name)
     {
-        viewport = new StretchViewport(640, 480);
+        viewport = new FitViewport(640, 480);
         sceneLoader = new SceneLoader();
         sceneLoader.loadScene(name, viewport);
 
