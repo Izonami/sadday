@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.uwsoft.editor.renderer.components.DimensionsComponent;
 import com.uwsoft.editor.renderer.components.TransformComponent;
+import com.uwsoft.editor.renderer.components.physics.PhysicsBodyComponent;
 import com.uwsoft.editor.renderer.scripts.IScript;
 import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 
@@ -12,78 +13,74 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
  */
 public class Player implements IScript
 {
-    private Vector2 speed;
-    private float gravity       = -300f;
-    private float jumpSpeed     = 200f;
-    public boolean jump         = false;
+    public static final float SPEED = 3f; //Скорость персонажа
+    private Vector2 velocity    = new Vector2();
+    private float jumpImpulse     = 100f;
+    public boolean isJump       = false;
 
     Entity entity;
-    public TransformComponent transformComponent;
-    private DimensionsComponent dimensionsComponent;
+    private TransformComponent tc;
+    private DimensionsComponent dc;
+    private PhysicsBodyComponent pbc;
 
     @Override
     public void init(Entity entity)
     {
         this.entity = entity;
 
-        transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
-        dimensionsComponent = ComponentRetriever.get(entity, DimensionsComponent.class);
-        transformComponent.originX = dimensionsComponent.width/2;
-        transformComponent.originY = dimensionsComponent.height/2;
-
-        speed = new Vector2(100, 0);
+        tc = ComponentRetriever.get(entity, TransformComponent.class);
+        dc = ComponentRetriever.get(entity, DimensionsComponent.class);
+        pbc = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
     }
 
     @Override
     public void act(float delta)
     {
-        speed.y += gravity*delta;
-        transformComponent.y += speed.y*delta;
+        velocity.y = pbc.body.getLinearVelocity().y;
+        pbc.body.setLinearVelocity(velocity);
+        pbc.body.setFixedRotation(true);
 
-        if(transformComponent.y < 55f)
+        if(isJump)
         {
-            speed.y = 0;
-            transformComponent.y = 55f;
+            pbc.body.applyLinearImpulse(0, jumpImpulse, pbc.body.getPosition().x, pbc.body.getPosition().y, true);
+            isJump = false;
         }
     }
 
     @Override
-    public void dispose() {
-
-    }
-
-    public TransformComponent getTC()
+    public void dispose()
     {
-        return transformComponent;
+
     }
 
     public void changeScale(float scale)
     {
-        transformComponent.scaleX = scale;
+        tc.scaleX = scale;
     }
 
     public float getCenterX()
     {
-        return transformComponent.x+dimensionsComponent.width/2;
+        return tc.x+dc.width/2;
     }
 
     public float getCenterY()
     {
-        return transformComponent.y+dimensionsComponent.height/2;
+        return tc.y+dc.height/2;
     }
 
-    public Vector2 getSpeed()
+    public Vector2 getVelocity()
     {
-        return speed;
+        return velocity;
     }
 
-    public float getJumpSpeed()
+    public void resetVelocity()
     {
-        return jumpSpeed;
+        velocity.x = 0;
+        velocity.y = 0;
     }
 
-    public boolean isJump()
+    public void jump()
     {
-        return jump;
+        isJump = true;
     }
 }

@@ -1,6 +1,7 @@
 package com.fog.corp.controller;
 
 import com.fog.corp.model.GameWorld;
+import com.fog.corp.model.Player;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,9 +73,9 @@ public class PlayerController
         keys.get(keys.put(Keys.DOWN, false));
     }
 
-    public void update(float delta)
+    public void update()
     {
-        processInput(delta);
+        processInput();
     }
 
     public void resetWay()
@@ -85,40 +86,28 @@ public class PlayerController
         upReleased();
     }
 
-    private void processInput(float delta)
+    private void processInput()
     {
+        world.getPlayer().resetVelocity();
+
         if(keys.get(Keys.LEFT))
         {
-            world.getPlayer().getTC().x -= world.getPlayer().getSpeed().x*delta;
+            world.getPlayer().getVelocity().x =- Player.SPEED;
             world.getPlayer().changeScale(-1f);
         }
 
         if(keys.get(Keys.RIGHT))
         {
-            world.getPlayer().getTC().x += world.getPlayer().getSpeed().x*delta;
+            world.getPlayer().getVelocity().x = Player.SPEED;
             world.getPlayer().changeScale(1f);
         }
 
-        if (keys.get(Keys.UP) && !world.getPlayer().isJump() && world.getPlayer().getTC().y == 55)
-        {
-            world.getPlayer().getSpeed().y = world.getPlayer().getJumpSpeed();
-            world.getPlayer().jump = false;
-        }
-
-        /*world.getPlayer().resetVelocity();
-
-        if (keys.get(Keys.LEFT))
-            world.getPlayer().getVelocity().x =- Player.SPEED;
-
-        if (keys.get(Keys.RIGHT))
-            world.getPlayer().getVelocity().x = Player.SPEED;
-
         if (keys.get(Keys.UP))
             if(world.getPcl().isPlayerOnGround())
+            {
                 world.getPlayer().jump();
+            }
 
-        if (keys.get(Keys.DOWN))
-            System.out.println("DOWN");
 
         if ((keys.get(Keys.UP) && keys.get(Keys.DOWN)) ||
                 (!keys.get(Keys.UP) && (!keys.get(Keys.DOWN))))
@@ -126,7 +115,7 @@ public class PlayerController
 
         if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT)) ||
                 (!keys.get(Keys.LEFT) && (!keys.get(Keys.RIGHT))))
-            world.getPlayer().getVelocity().x = 0;*/
+            world.getPlayer().getVelocity().x = 0;
     }
 
 }
