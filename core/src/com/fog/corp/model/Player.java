@@ -13,7 +13,7 @@ import com.uwsoft.editor.renderer.utils.ComponentRetriever;
 public class Player implements IScript
 {
     private Vector2 speed;
-    private float gravity       = -500f;
+    private float gravity       = -300f;
     private float jumpSpeed     = 200f;
     public boolean jump         = false;
 
@@ -50,6 +50,11 @@ public class Player implements IScript
     @Override
     public void dispose() {
 
+    }
+
+    public TransformComponent getTC()
+    {
+        return transformComponent;
     }
 
     public void changeScale(float scale)

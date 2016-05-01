@@ -89,17 +89,17 @@ public class PlayerController
     {
         if(keys.get(Keys.LEFT))
         {
-            world.getPlayer().transformComponent.x -= world.getPlayer().getSpeed().x*delta;
+            world.getPlayer().getTC().x -= world.getPlayer().getSpeed().x*delta;
             world.getPlayer().changeScale(-1f);
         }
 
         if(keys.get(Keys.RIGHT))
         {
-            world.getPlayer().transformComponent.x += world.getPlayer().getSpeed().x*delta;
+            world.getPlayer().getTC().x += world.getPlayer().getSpeed().x*delta;
             world.getPlayer().changeScale(1f);
         }
 
-        if (keys.get(Keys.UP) && !world.getPlayer().isJump())
+        if (keys.get(Keys.UP) && !world.getPlayer().isJump() && world.getPlayer().getTC().y == 55)
         {
             world.getPlayer().getSpeed().y = world.getPlayer().getJumpSpeed();
             world.getPlayer().jump = false;
